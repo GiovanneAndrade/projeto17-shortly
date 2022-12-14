@@ -3,7 +3,7 @@ import connection from "../database/db.js";
 async function getMeUrlsRepository() {
   const result = await connection.query(
     `
-      SELECT * FROM urls;
+      SELECT * FROM users;
     `
   );
   return result;

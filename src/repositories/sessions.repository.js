@@ -17,9 +17,19 @@ async function postSessionRepository({ userId, token }) {
   return result;
   
 }
-
+async function getSessionRepository({ token }) {
+  
+  const result = await connection.query(
+    `
+      SELECT * FROM sessions WHERE token = '${token}'
+   `
+    
+  );
+  return result;
+  
+}
 
 export {
   postSessionRepository,
-  
+  getSessionRepository
 }

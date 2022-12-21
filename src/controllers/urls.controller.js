@@ -1,7 +1,11 @@
 import * as allUrls from "../repositories/urls.repository.js";
-import { nanoid } from 'nanoid'
-async function getMeUrlsController(req, res) {
-  try {    
+import * as allSessions from "../repositories/sessions.repository.js";
+import * as allUser from "../controllers/sessions.controller.js";
+import { nanoid } from "nanoid";
+
+async function getIdUrlsController(req, res) {
+  const idUrl = req.params.id;
+  try {
     const result = await allUrls.getIdUrlsRepository({ idUrl });
     const { id, shortUrl, url } = result.rows[0];
     return res.status(200).send({ id, shortUrl, url });
@@ -9,7 +13,7 @@ async function getMeUrlsController(req, res) {
     return res.sendStatus(500).send(error);
   }
 }
-    
+
 async function postUrlsShortenController(req, res) {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");

@@ -62,11 +62,21 @@ async function postUrlsRepository({ url, userId, shortUrl, visitCount }) {
   return result;
 }
 
+async function deleteUrlRepository({ id }) {
+  const result = await connection.query(
+    `
+      DELETE FROM urls WHERE id = '${id}'
+    `
+  );
+  return result;
+}
+
 
 
 export {
   consultNameUserRepository,
   consultUserRepository,
+  deleteUrlRepository,
   getIdUrlsRepository,
   postUrlsRepository,
   getUrlsRedirectRepository,

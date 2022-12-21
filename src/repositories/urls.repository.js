@@ -1,6 +1,6 @@
 import connection from "../database/db.js";
 
-async function getMeUrlsRepository() {
+async function getIdUrlsRepository({ idUrl }) {
   const result = await connection.query(
     `
       SELECT * FROM urls;
@@ -8,6 +8,7 @@ async function getMeUrlsRepository() {
   );
   return result;
 }
+
 async function postUrlsRepository({ url, userId, shortUrl, visitCount }) {
   const result = await connection.query(
     `

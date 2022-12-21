@@ -5,7 +5,7 @@ async function getConsultSignupRepository({email}) {
   const result = await connection.query(
     `
       SELECT * FROM users WHERE email = '${email}'
-   `
+   `   
   );
   return result;
 }

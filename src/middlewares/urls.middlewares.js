@@ -30,4 +30,21 @@ async function postUrlShortenMiddlewares(req, res, next) {
 
   next(); 
 }
-export { postUrlsMiddlewares, postUrlShortenMiddlewares };
+
+async function getUrlsOpenMiddlewares(req, res, next) {
+  const { shortUrl } = req.params;
+  const consultShortUrl = await allUrls.getUrlsRedirectRepository({ shortUrl });
+  if (consultShortUrl.rows.length === 0) {
+    return res.sendStatus(404);
+  }
+  next();
+}
+
+
+
+export {
+ 
+  postUrlsMiddlewares,
+  postUrlShortenMiddlewares,
+  getUrlsOpenMiddlewares,
+};

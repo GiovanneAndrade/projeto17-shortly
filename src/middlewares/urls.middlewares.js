@@ -40,6 +40,26 @@ async function getUrlsOpenMiddlewares(req, res, next) {
   next();
 }
 
+async function validationSessionMiddlewares(req, res, next) {
+  let { id } = req.params;
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+  const validationToken = await allSessions.getSessionRepository({ token });
+  const idUrl = id;
+  const validationUrl = await allUrls.getIdUrlsRepository({ idUrl });
+  if (validationUrl.rows.length === 0) {
+    return res.sendStatus(404);
+  }
+  if (
+    validationToken.rows.length === 0 ||
+    validationUrl.rows[0].userId !== validationToken.rows[0].userId
+  ) {
+    return res.sendStatus(401);
+  }
+
+  next();
+}
+
 
 
 export {

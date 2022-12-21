@@ -42,6 +42,10 @@ async function getUrlsRedirectRepository({ shortUrl }) {
 async function getUrlsUpdateRedirectRepository({ visitCount, shortUrl }) {
   const result = await connection.query(
     `
+      UPDATE urls SET "visitCount" = $1 
+      WHERE "shortUrl" = $2;
+    `,
+    [visitCount, shortUrl]
   );
   return result;
 }

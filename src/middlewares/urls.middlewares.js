@@ -11,16 +11,13 @@ async function postUrlsMiddlewares(req, res, next) {
 }
 
 async function postUrlShortenMiddlewares(req, res, next) {
-  const { authorization } = req.headers; 
-  const { url } = req.body
+  const { authorization } = req.headers;
+  const { url } = req.body;
   const token = authorization?.replace("Bearer ", "");
-  if(!token) return res.sendStatus(401);
+  if (!token) return res.sendStatus(401);
   const validationToken = await allSessions.getSessionRepository({ token });
-  
-  const validationUrl = postUrlSchema.validate(
-    { url },
-    { abortEarly: false }
-  );
+
+  const validationUrl = postUrlSchema.validate({ url }, { abortEarly: false });
 
   if (validationToken.rows.length === 0) { 
     return res.sendStatus(401);

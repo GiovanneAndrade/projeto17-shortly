@@ -39,4 +39,21 @@ async function getUrlsOpenController(req, res) {
   }
 }
 
-export { getMeUrlsController, postUrlsController }
+async function deleteUrlController(req, res) {
+  const { id } = req.params;
+  try {
+    await allUrls.deleteUrlRepository({ id });
+    return res.sendStatus(204);
+  } catch (error) {
+    return res.sendStatus(500).send(error);
+  }
+}
+
+
+
+export {
+  deleteUrlController,
+  getIdUrlsController,
+  postUrlsShortenController,
+  getUrlsOpenController,
+};

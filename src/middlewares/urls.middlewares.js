@@ -60,10 +60,20 @@ async function validationSessionMiddlewares(req, res, next) {
   next();
 }
 
+async function getUrlMeMiddlewares(req, res, next) {
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+  const validationToken = await allSessions.getSessionRepository({ token });
 
+  if (validationToken.rows.length === 0) {
+    return res.sendStatus(401);
+  }
+  next();
+}
 
 export {
- 
+  getUrlMeMiddlewares,
+  validationSessionMiddlewares,
   postUrlsMiddlewares,
   postUrlShortenMiddlewares,
   getUrlsOpenMiddlewares,

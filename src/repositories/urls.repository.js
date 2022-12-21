@@ -3,7 +3,23 @@ import connection from "../database/db.js";
 async function getIdUrlsRepository({ idUrl }) {
   const result = await connection.query(
     `
-      SELECT * FROM urls;
+      SELECT * FROM urls where id = ${idUrl};
+    `
+  );
+  return result;
+}
+async function consultNameUserRepository({ id }) {
+  const result = await connection.query(
+    `
+      SELECT * FROM users where id = ${id};
+    `
+  );
+  return result;
+}
+
+
+async function getUrlsUpdateRedirectRepository({ visitCount, shortUrl }) {
+  const result = await connection.query(
     `
   );
   return result;

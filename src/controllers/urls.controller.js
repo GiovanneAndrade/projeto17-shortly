@@ -2,8 +2,9 @@ import * as allUrls from "../repositories/urls.repository.js";
 import { nanoid } from 'nanoid'
 async function getMeUrlsController(req, res) {
   try {    
-    const result = await allUrls.getMeUrlsRepository();
-    return res.send(result.rows);
+    const result = await allUrls.getIdUrlsRepository({ idUrl });
+    const { id, shortUrl, url } = result.rows[0];
+    return res.status(200).send({ id, shortUrl, url });
   } catch (error) {
     return res.sendStatus(500).send(error);
   }

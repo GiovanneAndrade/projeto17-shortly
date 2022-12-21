@@ -31,7 +31,14 @@ function consultUserRepository({ id }) {
   );
   return result;
 }
-
+async function getUrlsRedirectRepository({ shortUrl }) {
+  const result = await connection.query(
+    `
+      SELECT * FROM urls WHERE "shortUrl" = '${shortUrl}'
+    `
+  );
+  return result;
+}
 async function getUrlsUpdateRedirectRepository({ visitCount, shortUrl }) {
   const result = await connection.query(
     `
@@ -62,5 +69,6 @@ export {
   consultUserRepository,
   getIdUrlsRepository,
   postUrlsRepository,
+  getUrlsRedirectRepository,
   getUrlsUpdateRedirectRepository,
 };

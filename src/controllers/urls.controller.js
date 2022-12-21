@@ -10,12 +10,15 @@ async function getMeUrlsController(req, res) {
   }
 }
     
-async function postUrlsController(req, res) {
-  const { url } = req.body
-  const userId = 1
-  const shortUrl = nanoid()
-  const visitCount = 0
-  try {    
+async function postUrlsShortenController(req, res) {
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+  const validationToken = await allSessions.getSessionRepository({ token });
+  const { url } = req.body;
+  const { userId } = validationToken.rows[0];
+  const shortUrl = nanoid();
+  const visitCount = 0;
+  try {
     await allUrls.postUrlsRepository({ url, userId, shortUrl, visitCount });
     return res.status(201).send({shortUrl});
   } catch (error) {

@@ -1,12 +1,33 @@
-import { Router } from "express"
-import { getIdUrlsController, postUrlsController } from "../controllers/urls.controller.js"
-import { postUrlShortenMiddlewares, postUrlsMiddlewares } from "../middlewares/urls.middlewares.js"
-   
+import { Router } from "express";
+import {
+  deleteUrlController,
+  getIdUrlsController,
+  getMeUrlsController,
+  getUrlsOpenController,
+  postUrlsShortenController,
+} from "../controllers/urls.controller.js";
+import {
+  getUrlMeMiddlewares,
+  getUrlsOpenMiddlewares,
+  postUrlShortenMiddlewares,
+  postUrlsMiddlewares,
+  validationSessionMiddlewares,
+} from "../middlewares/urls.middlewares.js";
 
-const router = Router() 
-    
-router.get('/urls/:id', postUrlsMiddlewares, getIdUrlsController)
-router.post('/urls/shorten', postUrlShortenMiddlewares, postUrlsController)
- 
+const router = Router();
 
-export default router
+router.get("/urls/:id", postUrlsMiddlewares, getIdUrlsController);
+router.post(
+  "/urls/shorten",
+  postUrlShortenMiddlewares,
+  postUrlsShortenController
+);
+router.get(     
+  "/urls/open/:shortUrl",
+  getUrlsOpenMiddlewares,
+  getUrlsOpenController
+);
+router.get("/users/me",getUrlMeMiddlewares, getMeUrlsController);
+router.delete("/urls/:id", validationSessionMiddlewares, deleteUrlController);
+
+export default router;

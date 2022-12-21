@@ -20,7 +20,20 @@ async function postUrlsShortenController(req, res) {
   const visitCount = 0;
   try {
     await allUrls.postUrlsRepository({ url, userId, shortUrl, visitCount });
-    return res.status(201).send({shortUrl});
+    return res.status(201).send({ shortUrl });
+  } catch (error) {
+    return res.sendStatus(500).send(error);
+  }
+}
+
+async function getUrlsOpenController(req, res) {
+  const { shortUrl } = req.params;
+  const consultShortUrl = await allUrls.getUrlsRedirectRepository({ shortUrl });
+  let visitCount = Number(consultShortUrl.rows[0].visitCount);
+  visitCount++;
+  try {
+    await allUrls.getUrlsUpdateRedirectRepository({ visitCount, shortUrl });
+    return res.redirect(consultShortUrl.rows[0].url);
   } catch (error) {
     return res.sendStatus(500).send(error);
   }

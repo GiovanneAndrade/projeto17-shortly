@@ -49,10 +49,31 @@ async function deleteUrlController(req, res) {
   }
 }
 
+async function getMeUrlsController(req, res) {
+  const { authorization } = req.headers;
+  const result = await allUser.validationSessions({ authorization });
+  const id = result[0].userId;
 
+  try {
+    const consultName = await allUrls.consultNameUserRepository({ id });
+    const colsultUserId = await allUrls.consultUserRepository({ id });
+    const shortenedUrls = colsultUserId.rows;
+    const consult = await allUrls.getMeUrlsRepository({ id });
+    const { visitCount } = consult.rows[0];
+    return res.send({
+      id,
+      name: consultName.rows[0].name,
+      visitCount,
+      shortenedUrls,
+    });
+  } catch (error) {
+    return res.sendStatus(500).send(error);
+  }
+}
 
 export {
   deleteUrlController,
+  getMeUrlsController,
   getIdUrlsController,
   postUrlsShortenController,
   getUrlsOpenController,

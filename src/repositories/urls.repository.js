@@ -17,6 +17,20 @@ async function consultNameUserRepository({ id }) {
   return result;
 }
 
+function consultUserRepository({ id }) {
+  const result = connection.query(
+    `
+      SELECT 
+       urls.id, 
+       urls.url, 
+       urls."shortUrl", 
+       urls."visitCount" 
+      FROM urls 
+      where "userId" = ${id}
+    `
+  );
+  return result;
+}
 
 async function getUrlsUpdateRedirectRepository({ visitCount, shortUrl }) {
   const result = await connection.query(
@@ -41,4 +55,12 @@ async function postUrlsRepository({ url, userId, shortUrl, visitCount }) {
   return result;
 }
 
-export { getMeUrlsRepository, postUrlsRepository };
+
+
+export {
+  consultNameUserRepository,
+  consultUserRepository,
+  getIdUrlsRepository,
+  postUrlsRepository,
+  getUrlsUpdateRedirectRepository,
+};

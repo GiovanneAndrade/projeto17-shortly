@@ -3,6 +3,7 @@ import * as allSignup from "../repositories/signup.repository.js";
 
 async function postSignupController(req, res) {
   let { name, email, password } = req.body;
+
   name = name.trim().replace(/( )+/g, " ");
   let novoEmail = email.replace(/[^a-z0-9]/gi, "");
   let novoPassword = password.replace(/[^a-z0-9]/gi, "");
@@ -14,6 +15,7 @@ async function postSignupController(req, res) {
     return res.sendStatus(404);
   }
   password = bcrypt.hashSync(req.body.password, 10);
+
   try {
     const result = await allSignup.postSignupRepository({
       name,

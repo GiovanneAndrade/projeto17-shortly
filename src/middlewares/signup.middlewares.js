@@ -7,14 +7,6 @@ async function postSignupMiddlewares(req, res, next) {
   }
   const consult = await allSignup.getConsultSignupRepository({ email });
   if (consult.rows.length > 0) return res.status(409).send("users existing");
-
-  let novoEmail = email.replace(/[^a-z0-9]/gi, "");
-  let novoPassword = password.replace(/[^a-z0-9]/gi, "");
-
-  if (email !== novoEmail || password !== novoPassword) {
-    return res.sendStatus(404);
-  }
-
   const validationUser = postSignupSchema.validate(
     { name, email, password, confirmPassword },
     { abortEarly: false }

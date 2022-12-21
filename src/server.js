@@ -1,7 +1,7 @@
 import  express  from "express";
 import dotenv from 'dotenv';
 import urlsRouter from './routers/urls.router.js'
-import signupRouter from './routers/signup.router.js'
+import signupRouter from './routers/users.router.js'
 const app = express();
 app.use(express.json());
 dotenv.config();

@@ -71,12 +71,21 @@ async function deleteUrlRepository({ id }) {
   return result;
 }
 
-
+function getMeUrlsRepository({ id }) {
+  const result = connection.query(
+    `
+       SELECT SUM("visitCount") AS 
+      "visitCount" FROM urls WHERE "userId" = '${id}';
+    `
+  );
+  return result;
+}
 
 export {
   consultNameUserRepository,
   consultUserRepository,
   deleteUrlRepository,
+  getMeUrlsRepository,
   getIdUrlsRepository,
   postUrlsRepository,
   getUrlsRedirectRepository,

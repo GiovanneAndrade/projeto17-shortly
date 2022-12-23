@@ -1,5 +1,6 @@
 import  express  from "express";
 import dotenv from 'dotenv';
+import cors from 'cors';
 import urlsRouter from './routers/urls.router.js'
 import signupRouter from './routers/users.router.js'
 import rankingRouter from './routers/ranking.router.js'

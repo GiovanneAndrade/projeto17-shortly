@@ -6,6 +6,7 @@ import rankingRouter from './routers/ranking.router.js'
 const app = express();
 app.use(express.json());
 dotenv.config();
+app.use(cors());
 
 
 app.use(urlsRouter)
